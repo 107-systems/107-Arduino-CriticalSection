@@ -5,24 +5,35 @@
  * Contributors: https://github.com/107-systems/107-Arduino-Cyphal/graphs/contributors.
  */
 
-#ifndef ARDUINO_LOCK_GUARD_H_
-#define ARDUINO_LOCK_GUARD_H_
-
 /**************************************************************************************
  * INCLUDE
  **************************************************************************************/
 
 #include "CritSec.h"
 
+#ifdef ARDUINO_ARCH_STM32
+
+#include <Arduino.h>
+
 /**************************************************************************************
- * CLASS DECLARATION
+ * GLOBAL VARIABLES
  **************************************************************************************/
 
-class LockGuard
-{
-public:
-   LockGuard() { crit_sec_enter(); }
-  ~LockGuard() { crit_sec_leave(); }
-};
+static volatile uint32_t primask_bit = 0;
 
-#endif /* ARDUINO_LOCK_GUARD_H_ */
+/**************************************************************************************
+ * FUNCTION DEFINITION
+ **************************************************************************************/
+
+extern "C" void crit_sec_enter()
+{
+  primask_bit = __get_PRIMASK();
+  __disable_irq();
+}
+
+extern "C" void crit_sec_leave()
+{
+  __set_PRIMASK(primask_bit);
+}
+
+#endif /* ARDUINO_ARCH_STM32 */
