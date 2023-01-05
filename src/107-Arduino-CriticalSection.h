@@ -1,12 +1,12 @@
 /**
  * This software is distributed under the terms of the MIT License.
- * Copyright (c) 2020 LXRobotics.
+ * Copyright (c) 2023 LXRobotics.
  * Author: Alexander Entinger <alexander.entinger@lxrobotics.com>
- * Contributors: https://github.com/107-systems/107-Arduino-Cyphal/graphs/contributors.
+ * Contributors: https://github.com/107-systems/107-Arduino-CriticalSection/graphs/contributors.
  */
 
-#ifndef ARDUINO_LOCK_GUARD_H_
-#define ARDUINO_LOCK_GUARD_H_
+#ifndef INC_107_ARDUINO_CRITICALSECTION_107_ARDUINO_CRITICALSECTION_H
+#define INC_107_ARDUINO_CRITICALSECTION_107_ARDUINO_CRITICALSECTION_H
 
 /**************************************************************************************
  * INCLUDE
@@ -18,11 +18,11 @@
  * CLASS DECLARATION
  **************************************************************************************/
 
-class LockGuard
+class CriticalSection
 {
 public:
-   LockGuard() { crit_sec_enter(); }
-  ~LockGuard() { crit_sec_leave(); }
+  CriticalSection() { crit_sec_enter(); }
+  ~CriticalSection() { crit_sec_leave(); }
 };
 
-#endif /* ARDUINO_LOCK_GUARD_H_ */
+#endif /* INC_107_ARDUINO_CRITICALSECTION_107_ARDUINO_CRITICALSECTION_H */
